@@ -1,0 +1,26 @@
+
+We are on the home stretch!  All major components are written.  All that's left is a lot
+of tweaking and debugging.
+
+
+*  Tweaking: add the following features to the GUI:
+	^ A JLabel that counts how many cards that are in the pile.  Every time the client receives a
+	PLAY_CARD command, the counter should increment.
+	^ Removing players from the JTable in case of drops.
+	^ (optional) A more obvious slap notification.  Perhaps a JLabel that appears over the cards
+	that have been played?
+	
+*  Tweaking: add the following features to the server:
+	^ (optional) Allow players to join in the middle of the game.
+	^ (optional) Close the ServerSocket when the game ends
+	
+*  Right now, there is no certain way to punish inappropriate slapping.  Consider this a low
+	priority problem, as we can get demoed without solving it.
+	Proposals:
+	^ Force the offender to lose two of his cards.  Unfortunately, this isn't effective if
+	the offender does not have any cards to lose.
+	^ Kick the offender out of the game.  Requires some quite annoying modification of the
+	game model, GUI public methods, and protocol.
+	^ Prohibit the offender from slapping.  Somewhat easier, as the server can just be set up
+	to ignore slaps from the offender.
+	

@@ -1,0 +1,51 @@
+PROTOCOL
+
+Messages sent from client to server:
+	1.  All messages shall start with the magic number, encoded as a byte, 29
+	2.  One byte signifying the command type:
+		* 0 (JOIN_REQUEST) - used when first communicating with the server
+			^ The client will receive an indirect acknowledgement of the request in the form
+			of PLAYER_JOIN's
+		* 10 (PLAY_CARD) - take a card from the player's deck and add it to the pile.
+		* 11 (SLAP) - claim to have seen a sandwich or double and attempt to claim the pile.
+	3.  More information may follow certain commands:
+		* 0 (NEW_PLAYER) - an UTF-8 string containing the player's name
+	4.  The only command that should receive a direct response is JOIN_REQUEST
+	5.  The server shall ignore all other commands.
+		
+Messages sent from server to client:
+	1.  All messages shall start with the magic number, encoded as a byte, 29
+	2.  One byte signifying the command type:
+		* -3 (NAME_TAKEN) - a response to a join game request signifying a player with the name is already in the game.
+		* -2 (GAME_FULL) - a response to a join game signifying the game is full
+		* -1 (ERR) - placeholder; generic error
+
+		* 1 (PLAYER_JOIN) - a notification to clients that a new player has joined
+		* 3 (PLAYER_DROP) - a notification to clients that a player has dropped
+		* 10 (GAME_START) - the game has started!
+		* 20 (CARD_ADDED) - a new card has been added to the pile
+		* 21 (SLAP) - a player has attempted to claim the pile.
+		* 22 (TURN) - it is now another player's turn
+		* 23 (PILE_CLAIM) - a player has claimed the pile
+		* 60 (GAME_END) - there is a winner!
+	3.  More information may follow certain commands:
+		* 0 (PLAYER_LIST)
+			^ a byte showing how many players
+			^ For each player in the game:
+				a UTF-8 string containing the player's name
+				a byte containing player ID
+		* 1 (PLAYER_JOIN) - a byte containing a unique player ID, followed by the player's name encoded as a UTF-8 string.
+		* 3 (PLAYER_DROP) - a byte containing the dropped player's ID, followed by a byte saying how many cards were added to the pile.
+		* 10 (GAME_START)
+			^ a byte showing how many players
+			^ For each player in the game:
+				a byte containing player ID
+				a byte containing their initial # of cards.
+		* 20 (CARD_ADDED) - a byte encoding a card's rank, and then a byte encoding a card's suit.
+		* 21 (SLAP) - a byte containing a unique player ID, followed by a byte encoding success:
+			^ -1 (SLAP_BAD) - player slapped at an inappropriate time.
+			^ 0 (SLAP_GOOD) - successful; player claimed the pile
+			^ 1 (SLAP_SLOW) - was a valid slap, but another player claimed the pile already or was otherwise too late
+		* 22 (TURN) - a byte containing a unique player ID.
+		* 23 (PILE_CLAIM) - a byte containing a unique player ID, followed by a byte containing how many cards the player won
+		* 60 (GAME_END) - a byte containing the player ID that won.

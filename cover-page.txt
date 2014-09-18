@@ -1,0 +1,28 @@
+CSE132 Cover Page for Lab 5a
+
+By submitting this assignment, you certify that you have read, 
+understood, and complied with the CSE 132 Collaboration Policy.
+
+Who worked on this lab?
+
+     Last Name           Last 3 Digits of student's ID
+
+1)		Hsu						402
+2)		Darwin					297
+3)		Scheid					343
+4)		Fung					794
+
+Tell us about your protocol:
+
+	See protocol.txt
+
+
+If there is anything else we should know about your work on this assignment, 
+please explain here:
+
+	Main entry point for the server is in Server.java
+	Main entry point for the client is in ClientView.java
+	
+	The game starts automatically when three players connect (set by MAX_PLAYERS inside ERSGame.java)
+	The address and port to which the client connects is hard-coded in ClientView.java as ADDR and PORT
+	The port on which the server runs is hard-coded in Server.java as PORT
